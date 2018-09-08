@@ -34,7 +34,7 @@ const Results = styled.div`
 
 const TEAMS_QUERY = gql`
     query TeamQuery{
-            teams {
+            teams (orderBy: name_ASC){
                 id
                 name
                 homeMatches{

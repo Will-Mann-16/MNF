@@ -5,7 +5,7 @@ import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
 const LeagueQuery = gql`
     query LeagueQuery {
-        teams{
+        teams(orderBy: name_ASC){
             id
             name
             homeMatches{
