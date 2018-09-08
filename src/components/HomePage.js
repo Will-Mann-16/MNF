@@ -113,6 +113,9 @@ export default class HomePage extends Component {
                                 var points = wins * 3 + draws * 1;
                                 league.push({name: team.name, wins, draws, losses, gd, points});
                             });
+                            league.sort((a,b) => {
+                                return a.points === b.points ? b.gd - a.gd : b.points - a.points;
+                            })
                             return (
                                 <Table>
                                     <tr>
