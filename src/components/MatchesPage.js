@@ -103,9 +103,9 @@ export default class MatchesPage extends Component {
                                         <MatchHeader on={on} onClick={toggle}>
                                             Today [{present.length}]
                                         </MatchHeader>
-                                        <Transition keys={present.map((match, key) => {return key})} from={{height: 0}} enter={{height: on ? 'auto' : 0}} leave={{height: 0}}>
-                                            {present.map((match, key) => styles => <Match style={{...styles}} match={match} key={key}/>)}
-                                        </Transition>
+                                        <Reveal style={{display: on ? 'block' : 'none'}}>
+                                        {present.map((match, key) => <Match match={match} key={key}/>)}
+                                        </Reveal>
                                     </React.Fragment>
                                 }
                             </Toggle>
@@ -116,7 +116,7 @@ export default class MatchesPage extends Component {
                                             Next Matches [{future.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                            {future.map((match, key) => <Match match={match} key={key}/>)}
+                                            {future.map((match, key) => <Match  match={match} key={key}/>)}
                                             </Reveal>
                                     </React.Fragment>
                                 }
@@ -127,9 +127,9 @@ export default class MatchesPage extends Component {
                                         <MatchHeader on={on} onClick={toggle}>
                                             Previous Matches [{past.length}]
                                         </MatchHeader>
-                                        <Transition keys={past.map((match, key) => {return key})} from={{height: 0}} enter={{height: on ? 'auto' : 0}} leave={{height: 0}}>
-                                            {past.map((match, key) => styles => <Match style={{...styles}} match={match} key={key}/>)}
-                                        </Transition>
+                                        <Reveal style={{display: on ? 'block' : 'none'}}>
+                                        {past.map((match, key) => <Match  match={match} key={key}/>)}
+                                        </Reveal>
                                     </React.Fragment>
                                 }
                             </Toggle>
