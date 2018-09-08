@@ -1,0 +1,27 @@
+{
+  "name": "mnf",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apollo-boost": "^0.1.15",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^14.0.0",
+    "graphql-tag": "^2.9.2",
+    "moment": "^2.22.2",
+    "react": "^16.4.2",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.4.2",
+    "react-powerplug": "^1.0.0-rc.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "react-spring": "^5.6.14",
+    "roundrobin": "^1.0.3",
+    "styled-components": "^3.4.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
