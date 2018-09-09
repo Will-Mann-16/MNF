@@ -10,7 +10,7 @@ import Match from './MatchAdmin';
 import {Transition} from 'react-spring';
 const readMatches = gql`
     query readMatches{
-        matches{
+        matches(orderBy: date_ASC){
             id
             date
             homeTeam{

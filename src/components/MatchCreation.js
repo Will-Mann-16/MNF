@@ -18,7 +18,7 @@ export default class MatchesPage extends Component {
         return (
             <Query query={gql`
                 {
-                    teams{
+                    teams(orderBy: name_ASC){
                         id
                         name
                     }
@@ -26,11 +26,12 @@ export default class MatchesPage extends Component {
             `}>
                 {({data, loading}) => {
                     if (loading) return <LoadingIcon />;
-                    var matches = robin(10, data.teams);
+                    var matches = robin(11, data.teams);
                     var first_date = "09-10-2018";
                     var blackListedWeeks = ["10-22-2018", "10-29-2018"];
                     var blackListedDays = ["10-01-2018", "11-26-2018"];
                     var resultingMatches = [];
+                    console.log(matches);
                     var date = moment(first_date);
                     matches.map((week, weekKey) => {
                         date.add(weekKey == 0 ? 0 : 1, 'weeks');
