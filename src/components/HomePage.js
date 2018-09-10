@@ -102,6 +102,14 @@ export default class HomePage extends Component {
         return (
             <React.Fragment>
                     <h1>Monday Night Football</h1>
+                    <p>Welcome to Wellingtons MNF Competition.</p>
+                    <p>Rules:</p>
+                    <ul>
+                        <li>Matches played at 9pm on the day of the match on Mansergh.</li>
+                        <li>Normal Football Rules apply.</li>
+                        <li>If you fail to attend the opposition get a 3-0 walkover.</li>
+                        <li>League: 3 points for a win, 1 for a draw, 0 for a loss.</li>
+                    </ul>
                     <Query query={LeagueQuery}>
                         {({data, loading}) => {
                             if(loading) return <LoadingIcon />;
@@ -118,6 +126,7 @@ export default class HomePage extends Component {
                             })
                             return (
                                 <Table>
+                                    <tbody>
                                     <tr>
                                         <th>Name</th>
                                         <th>W</th>
@@ -134,6 +143,7 @@ export default class HomePage extends Component {
                                         <td>{row.gd}</td>
                                         <td>{row.points}</td>
                                         </tr>)}
+                                        </tbody>
                                 </Table>
                             )
                         }}

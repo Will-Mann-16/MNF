@@ -58,7 +58,7 @@ export default class MatchesPage extends Component {
         return (
             <Query query={gql`
                 {
-                    matches{
+                    matches(orderBy: date_ASC){
                         id
                         homeTeam{
                             id
