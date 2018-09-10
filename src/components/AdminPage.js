@@ -27,7 +27,7 @@ const LoginForm = styled.div`
 `;
 const MATCHES_QUERY = gql`
     query MatchesQuery{
-        matchesmatches(orderBy: date_ASC){
+        matches(orderBy: date_ASC){
     id
     date
     homeTeam{
