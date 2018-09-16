@@ -6,6 +6,7 @@ const Spinner = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.4);
+    z-index: 20;
     position: fixed;
     top: 0;
     bottom: 0;
