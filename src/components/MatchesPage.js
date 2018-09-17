@@ -7,6 +7,8 @@ import { Toggle } from 'react-powerplug';
 import LoadingIcon from './LoadingIcon';
 import moment from 'moment';
 import Match from './MatchAdmin';
+import {Helmet} from 'react-helmet'
+
 const readMatches = gql`
     query readMatches{
         matches(orderBy: date_ASC){
@@ -50,6 +52,9 @@ export default class MatchesPage extends Component {
         }
         return (
             <React.Fragment>
+            <Helmet><title>
+            Matches - MNF
+        </title></Helmet>
             <h1>Matches</h1>
             <Query query={gql`
                 {
@@ -99,7 +104,7 @@ export default class MatchesPage extends Component {
                                             Today [{present.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {present.map((match, key) => <Match match={match} key={key}/>)}
+                                        {present.map((match, key) =>  checkRegex(match) && <Match match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }
@@ -111,7 +116,7 @@ export default class MatchesPage extends Component {
                                             Next Matches [{future.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                            {future.map((match, key) => <Match  match={match} key={key}/>)}
+                                            {future.map((match, key) => checkRegex(match) && <Match  match={match} key={key}/>)}
                                             </Reveal>
                                     </React.Fragment>
                                 }
@@ -123,7 +128,7 @@ export default class MatchesPage extends Component {
                                             Previous Matches [{past.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {past.map((match, key) => <Match  match={match} key={key}/>)}
+                                        {past.map((match, key) => checkRegex(match) && <Match  match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }

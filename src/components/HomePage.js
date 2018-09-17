@@ -4,6 +4,8 @@ import {Query} from 'react-apollo';
 import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
 import { Table } from './Elements';
+import {Helmet} from 'react-helmet'
+
 import { calculateLeague } from './LeagueCalculations';
 const LeagueQuery = gql`
     query LeagueQuery {
@@ -51,7 +53,7 @@ export default class HomePage extends Component {
                             )
                         }}
                     </Query>
-                    <h2>Welcome to Wellingtons MNF Competition.</h2>
+                    <h2>Welcome to Wellingtons MNF Competition</h2>
                     <p>Rules:</p>
                     <ul>
                         <li>Matches played at 9pm on the day of the match on either Mansergh or Bawden-Martin (whichever is free).</li>

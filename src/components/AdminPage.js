@@ -6,6 +6,8 @@ import gql from 'graphql-tag';
 import Match from './MatchAdmin';
 import LoadingIcon from './LoadingIcon';
 import moment from 'moment';
+import {Helmet} from 'react-helmet'
+
 import { Toggle } from 'react-powerplug';
 const Input = styled.input`
     border: none;
@@ -99,7 +101,11 @@ export default class AdminPage extends Component {
                     }
                     })
                     return (
+
                         <React.Fragment>
+                        <Helmet><title>
+                        Admin - MNF
+                    </title></Helmet>
                         <Input onChange={(e) => this.setState({search: e.target.value})} value={this.state.search} placeholder="Search..."/>
                         <MatchGroup>
                             <Toggle>
@@ -109,7 +115,7 @@ export default class AdminPage extends Component {
                                             Today [{present.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {present.map((match, key) => <Match admin match={match} key={key}/>)}
+                                        {present.map((match, key) => checkRegex(match) && <Match admin match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }
@@ -121,7 +127,7 @@ export default class AdminPage extends Component {
                                             Next Matches [{future.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                            {future.map((match, key) => <Match admin match={match} key={key}/>)}
+                                            {future.map((match, key) => checkRegex(match) && <Match admin match={match} key={key}/>)}
                                             </Reveal>
                                     </React.Fragment>
                                 }
@@ -133,7 +139,7 @@ export default class AdminPage extends Component {
                                             Previous Matches [{past.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {past.map((match, key) => <Match admin match={match} key={key}/>)}
+                                        {past.map((match, key) => checkRegex(match) && <Match admin match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }

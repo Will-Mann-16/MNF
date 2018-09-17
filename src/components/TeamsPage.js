@@ -7,6 +7,8 @@ import {calculateWinsDrawsLosses, calculateLeagueRanks, calculateGD, calculateGo
 import { Table, MatchGroup, MatchHeader, Reveal } from './Elements';
 import Match from './MatchAdmin';
 import moment from 'moment';
+import {Helmet} from 'react-helmet'
+
 import {Toggle } from 'react-powerplug';
 
 const Teams = styled.div`
@@ -119,6 +121,9 @@ export default class TeamsPage extends Component {
         }
         return (
             <React.Fragment>
+            <Helmet><title>
+            Teams - MNF
+        </title></Helmet>
             <h1>Teams</h1>
             <Teams>
             <Query query={TEAMS_QUERY}>
@@ -188,7 +193,7 @@ export default class TeamsPage extends Component {
                                             Played [{played.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {played.map((match, key) => <Match match={match} key={key}/>)}
+                                        {played.map((match, key) => checkRegex(match) && <Match match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }
@@ -200,7 +205,7 @@ export default class TeamsPage extends Component {
                                             Next Matches [{notPlayed.length}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                            {notPlayed.map((match, key) => <Match  match={match} key={key}/>)}
+                                            {notPlayed.map((match, key) => checkRegex(match) && <Match  match={match} key={key}/>)}
                                             </Reveal>
                                     </React.Fragment>
                                 }

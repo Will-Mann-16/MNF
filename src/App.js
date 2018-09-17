@@ -8,6 +8,7 @@ import AdminPage from './components/AdminPage';
 import MatchesPage from './components/MatchesPage';
 import TeamsPage from './components/TeamsPage';
 import StatisticsPage from './components/StatisticsPage';
+import Footer from './components/Footer';
 import { Container, Wrapper } from './components/Elements';
 const client = new ApolloClient({
   uri: 'https://api-euwest.graphcms.com/v1/cjlr0p1g412i101gmf6o79vit/master'
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/statistics"><StatisticsPage /></Route>
           </Switch>
           </Container>
+          <Footer />
           </Fragment>
         </Router>
         </Wrapper>

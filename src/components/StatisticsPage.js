@@ -4,6 +4,7 @@ import {Query} from 'react-apollo';
 import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
 import { Table } from './Elements';
+import {Helmet} from 'react-helmet'
 import { calculateLeague, calculateGoalScorers } from './LeagueCalculations';
 const LeagueQuery = gql`
     query LeagueQuery {
@@ -43,6 +44,9 @@ export default class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
+            <Helmet><title>
+                Statistics - MNF
+            </title></Helmet>
                     <h1>Statistics</h1>
                     <Query query={LeagueQuery}>
                         {({data, loading}) => {
@@ -85,7 +89,7 @@ export default class HomePage extends Component {
                                             <th>House</th>
                                             <th>Goals</th>
                                         </tr>
-                                        {scorers.map(({name, house, total}, key) => <tr key={key}>
+                                        {scorers.slice(0, 10).map(({name, house, total}, key) => <tr key={key}>
                                             <td>{key + 1}</td>
                                             <td>{name}</td>
                                             <td>{house}</td>
