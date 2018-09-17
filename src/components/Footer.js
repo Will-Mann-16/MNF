@@ -10,6 +10,8 @@ const FooterComponent = styled.div`
         color: #aaa;
         position: fixed;
         bottom: 0;
+        max-height: 50px;
+        overflow: auto;
 `
 
 export default class Footer extends Component {
