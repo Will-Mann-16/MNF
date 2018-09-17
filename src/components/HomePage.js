@@ -3,6 +3,8 @@ import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
+import { Table } from './Elements';
+import { calculateLeague } from './LeagueCalculations';
 const LeagueQuery = gql`
     query LeagueQuery {
         teams(orderBy: name_ASC){
@@ -18,128 +20,29 @@ const LeagueQuery = gql`
             }
         }
     }
-`
-const Table = styled.table`
-    border-collapse: collapse;
-    width: 100%;
-    td, th{
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-    tr:nth-child(even){background-color: #f2f2f2;}
-    tr:hover {background-color: #ddd;}  
-    th{
-        padding-top: 12px;
-        padding-bottom: 12px;
-        color: white;
-        background-color: #4CAF50;
-    }
-`
+`;
 export default class HomePage extends Component {
     state = {  }
     render() {
-        const calculateGoalsFor = (team) => {
-            var total = 0;
-            team.homeMatches.map((match) => {
-                if(match.homeScore !== -1){
-                    total += match.homeScore;
-                }
-            });
-            team.awayMatches.map((match) => {
-                if(match.awayScore !== -1){
-                    total += match.awayScore;
-                }
-            });
-            return total;
-        }
-        const calculateGoalsAgainst = (team) => {
-            var total = 0;
-            team.homeMatches.map((match) => {
-                if(match.awayScore !== -1){
-                    total += match.awayScore;
-                }
-            });
-            team.awayMatches.map((match) => {
-                if(match.homeScore !== -1){
-                    total += match.homeScore;
-                }
-            });
-            return total;
-        }
-        const calculateWinsDrawsLosses = (team) => {
-            var wins = 0;
-            var draws = 0;
-            var losses = 0;
-            team.homeMatches.map((match) => {
-                if(match.homeScore !== -1 && match.awayScore !== -1){
-                    if(match.homeScore > match.awayScore){
-                        wins += 1;
-                    }
-                    else if(match.homeScore === match.awayScore){
-                        draws += 1;
-                    }
-                    else{
-                        losses += 1;
-                    }
-                }
-            });
-            team.awayMatches.map((match) => {
-                if(match.homeScore !== -1 && match.awayScore !== -1){
-                    if(match.awayScore > match.homeScore){
-                        wins += 1;
-                    }
-                    else if(match.homeScore === match.awayScore){
-                        draws += 1;
-                    }
-                    else{
-                        losses += 1;
-                    }
-                }
-            });
-            return {wins, draws, losses};
-        }  
         return (
             <React.Fragment>
-                    <h1>Monday Night Football</h1>
-                    <p>Welcome to Wellingtons MNF Competition.</p>
-                    <p>Rules:</p>
-                    <ul>
-                        <li>Matches played at 9pm on the day of the match on Mansergh.</li>
-                        <li>Normal Football Rules apply.</li>
-                        <li>If you fail to attend the opposition get a 3-0 walkover.</li>
-                        <li>League: 3 points for a win, 1 for a draw, 0 for a loss.</li>
-                    </ul>
+            <h1>Monday Night Football</h1>
                     <Query query={LeagueQuery}>
                         {({data, loading}) => {
                             if(loading) return <LoadingIcon />;
-                            var league = [];
-                            data.teams.map((team) => {
-                                var {wins, draws, losses} = calculateWinsDrawsLosses(team);
-                                var gd = calculateGoalsFor(team) - calculateGoalsAgainst(team);
-                                gd = gd > 0 ? "+" + gd : gd + "";
-                                var points = wins * 3 + draws * 1;
-                                league.push({name: team.name, wins, draws, losses, gd, points});
-                            });
-                            league.sort((a,b) => {
-                                return a.points === b.points ? b.gd - a.gd : b.points - a.points;
-                            })
+                            var league = calculateLeague(data.teams);
                             return (
                                 <Table>
                                     <tbody>
                                     <tr>
+                                        <th>Rank</th>
                                         <th>Name</th>
-                                        <th>W</th>
-                                        <th>D</th>
-                                        <th>L</th>
                                         <th>GD</th>
                                         <th>Points</th>
                                     </tr>
                                     {league.map((row, key) => <tr key={key}>
+                                        <td>{key + 1}</td>
                                         <td>{row.name}</td>
-                                        <td>{row.wins}</td>
-                                        <td>{row.draws}</td>
-                                        <td>{row.losses}</td>
                                         <td>{row.gd}</td>
                                         <td>{row.points}</td>
                                         </tr>)}
@@ -148,6 +51,14 @@ export default class HomePage extends Component {
                             )
                         }}
                     </Query>
+                    <h2>Welcome to Wellingtons MNF Competition.</h2>
+                    <p>Rules:</p>
+                    <ul>
+                        <li>Matches played at 9pm on the day of the match on either Mansergh or Bawden-Martin (whichever is free).</li>
+                        <li>Normal Football Rules apply, referred by committee mostly.</li>
+                        <li>If you fail to attend the opposition get a 3-0 walkover.</li>
+                        <li>League: 3 points for a win, 1 for a draw, 0 for a loss. Ranked by points, then goal difference, then total goals.</li>
+                    </ul>
             </React.Fragment>
 
         );

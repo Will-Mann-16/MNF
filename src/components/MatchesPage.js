@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from './Elements';
+import { MatchGroup, MatchHeader, Reveal } from './Elements';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import { Query, Mutation } from 'react-apollo';
@@ -34,18 +34,11 @@ const Input = styled.input`
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     margin: 10px 0;
 `;
-const MatchHeader = styled.h2`
-    cursor: pointer;
-    padding: 18px;
-    background-color: ${({on}) => on ? '#4CAF50' : "#eee"};
-`;
 
-const MatchGroup = styled.div`
-`;
 
-const Reveal = styled.div`
-    overflow: auto;
-`
+
+
+
 
 
 export default class MatchesPage extends Component {
@@ -56,6 +49,8 @@ export default class MatchesPage extends Component {
             return match.homeTeam.name.search(regex) !== -1 || match.awayTeam.name.search(regex) !== -1 || moment(match.date).format("ddd DD MMM YYYY").search(regex) !== -1 || match.homeScore.toString().search(regex) !== -1 || match.awayScore.toString().search(regex) !== -1 || this.state.search === "";
         }
         return (
+            <React.Fragment>
+            <h1>Matches</h1>
             <Query query={gql`
                 {
                     matches(orderBy: date_ASC){
@@ -71,6 +66,7 @@ export default class MatchesPage extends Component {
                         date
                         homeScore
                         awayScore
+                        scorers
                     }
                 }
             `}>
@@ -137,6 +133,7 @@ export default class MatchesPage extends Component {
                     )
                 }}
             </Query>
+            </React.Fragment>
         );
     }
 }

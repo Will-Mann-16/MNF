@@ -15,13 +15,14 @@ const Spinner = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.3s;
+    opacity: 0;
 `;
 export default class LoadingIcon extends React.Component{
     render(){
         var {spinning} = this.props;
-        return ( <Transition from={{ opacity: 0 }} to={{ opacity: spinning ? 1 : 0 }} leave={{opacity: 0}}>
-                    {(styles) => <Spinner style={{...styles}}><img src={icon} /></Spinner>}
-                </Transition>
+        return ( 
+            <Spinner style={{opacity: spinning ? 0 : 1}}><img src={icon} /></Spinner>
         )
     }
 };

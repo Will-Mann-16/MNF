@@ -40,6 +40,7 @@ const MATCHES_QUERY = gql`
     }
     homeScore
     awayScore
+    scorers
   }
     }
 `;

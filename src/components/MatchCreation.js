@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from '../../../../../../../Users/will/Library/Caches/typescript/2.9/node_modules/@types/react';
 import { Container } from './Elements';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';

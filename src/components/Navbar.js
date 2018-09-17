@@ -11,11 +11,40 @@ const Nav = styled.nav`
     justify-content: space-evenly;
     a {
         text-decoration: none;
+        width: 100%;
+        cursor: pointer;
+        text-align: center;
         color: white;
         padding: 12px 16px;
+        border-bottom: 0.5rem solid #666;
+        transition-duration: 0.4s;
         &:hover{
-            color: lightblue;
+            color: #333;
         }
+        &:nth-child(3n + 1){
+            border-bottom-color: #f49712;
+          }
+          &:nth-child(3n){
+            border-bottom-color: #f7d117;
+          }
+          &:nth-child(3n + 2){
+            border-bottom-color: #a6d6c9; 
+          }
+          &:nth-child(3n + 1):hover {
+            background-color: #f49712;
+          }
+          
+          &:nth-child(3n):hover {
+            background-color: #f7d117;
+          }
+          
+          &:nth-child(3n + 2):hover {
+            background-color: #a6d6c9;
+          }
+    }
+    margin-bottom: 1vmin;
+    @media (max-width: 768px){
+        flex-wrap: wrap;
     }
 `;
 
@@ -25,6 +54,7 @@ export default class Navbar extends Component {
             <Nav>
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/matches">Matches</NavLink>
+                <NavLink to="/statistics">Statistics</NavLink>
                 <NavLink to="/teams">Teams</NavLink>
                 <NavLink to="/admin">Admin</NavLink>
             </Nav>
