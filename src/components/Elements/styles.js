@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 50px;
 `;
 const Table = styled.table`
     border-collapse: collapse;
