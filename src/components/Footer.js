@@ -19,7 +19,7 @@ export default class Footer extends Component {
     render() {
         return (
             <FooterComponent>
-                Designed & Maintained by WellyCompSci. Monday Night Football is a student tournament with no house points ran by the students for the students. This web application was designed for educational purposes only. Teams, Matches, and Statistics are constantly reviewed to avoid errors, but we cannot warrant full correctness of all content. While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy. Built by Mann Power.
+                Designed & Maintained by WellyCompSci. Monday Night Football is a student tournament with no house points ran by the students for the students. This web application was designed for educational purposes only. Teams, Matches, and Statistics are constantly reviewed to avoid errors, but we cannot guarantee full correctness of all content. While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy. Built by Mann Power.
             </FooterComponent>
         );
     }
