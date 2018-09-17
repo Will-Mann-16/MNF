@@ -5,7 +5,6 @@ const Wrapper = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-        font-family: 'Gill Sans';
     background-color: white;
     h1, h2, h3, h4, h5, th {
         font-family: Rockwell, "Courier Bold", "Courier", "Georgia", Times, "Times New Roman", serif !important;
