@@ -28,16 +28,16 @@ const Nav = styled.nav`
             border-bottom-color: #f7d117;
           }
           &:nth-child(3n + 2){
-            border-bottom-color: #a6d6c9; 
+            border-bottom-color: #a6d6c9;
           }
           &:nth-child(3n + 1):hover {
             background-color: #f49712;
           }
-          
+
           &:nth-child(3n):hover {
             background-color: #f7d117;
           }
-          
+
           &:nth-child(3n + 2):hover {
             background-color: #a6d6c9;
           }
@@ -53,6 +53,7 @@ export default class Navbar extends Component {
         return (
             <Nav>
                 <NavLink to="/">Home</NavLink>
+                <NavLink to="/rules">Rules</NavLink>
                 <NavLink to="/matches">Matches</NavLink>
                 <NavLink to="/statistics">Statistics</NavLink>
                 <NavLink to="/teams">Teams</NavLink>

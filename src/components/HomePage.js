@@ -28,6 +28,9 @@ export default class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
+              <Helmet>
+                <title>Home - MNF</title>
+              </Helmet>
             <h1>Monday Night Football</h1>
                     <Query query={LeagueQuery}>
                         {({data, loading}) => {
@@ -53,14 +56,9 @@ export default class HomePage extends Component {
                             )
                         }}
                     </Query>
-                    <h2>Welcome to Wellingtons MNF Competition</h2>
-                    <p>Rules:</p>
-                    <ul>
-                        <li>Matches played at 9pm on the day of the match on either Mansergh or Bawden-Martin (whichever is free).</li>
-                        <li>Normal Football Rules apply, referred by committee mostly.</li>
-                        <li>If you fail to attend the opposition get a 3-0 walkover.</li>
-                        <li>League: 3 points for a win, 1 for a draw, 0 for a loss. Ranked by points, then goal difference, then total goals.</li>
-                    </ul>
+                    <h2>Welcome to Wellington's MNF Competition</h2>
+                    <p>Be sure to check out the rules, matches, current statistics and more on this website!</p>
+
             </React.Fragment>
 
         );

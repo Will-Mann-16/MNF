@@ -8,11 +8,19 @@ import AdminPage from './components/AdminPage';
 import MatchesPage from './components/MatchesPage';
 import TeamsPage from './components/TeamsPage';
 import StatisticsPage from './components/StatisticsPage';
+import RulesPage from './components/RulesPage';
 import Footer from './components/Footer';
 import { Container, Wrapper } from './components/Elements';
 const client = new ApolloClient({
   uri: 'https://api-euwest.graphcms.com/v1/cjlr0p1g412i101gmf6o79vit/master'
 });
+
+const NotFoundPage = ({location}) => (
+  <React.Fragment>
+    <h1>404 - Page Not Found</h1>
+    <p>Unfortunatly, the page {location.pathname} does not exist on our servers. Please return to the home page to view this website.</p>
+  </React.Fragment>
+)
 class App extends Component {
   render() {
     return (
@@ -28,6 +36,8 @@ class App extends Component {
             <Route path="/matches"><MatchesPage /></Route>
             <Route path="/teams"><TeamsPage /></Route>
             <Route path="/statistics"><StatisticsPage /></Route>
+            <Route path="/rules"><RulesPage /></Route>
+            <Route><NotFoundPage /></Route>
           </Switch>
           </Container>
           <Footer />
