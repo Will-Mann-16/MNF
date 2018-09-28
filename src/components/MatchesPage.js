@@ -80,17 +80,23 @@ export default class MatchesPage extends Component {
                     var past = [];
                     var present = [];
                     var future = [];
+                    var pastLength = 0;
+                    var presentLength = 0;
+                    var futureLength = 0;
                     data.matches.map((match) => {
-                        if(checkRegex(match)){
                             if(moment().isAfter(match.date, 'day')){
                             past.push(match);
+                            pastLength += checkRegex(match) ? 1 : 0;
                         }
                         else if(moment().isSame(match.date, 'day')){
                             present.push(match);
+                            presentLength += checkRegex(match) ? 1 : 0;
+
                         }
                         else{
                             future.push(match);
-                        }
+                            futureLength += checkRegex(match) ? 1 : 0;
+
                     }
                     })
                     return (
@@ -101,10 +107,10 @@ export default class MatchesPage extends Component {
                                 {({on, toggle}) => 
                                     <React.Fragment>
                                         <MatchHeader on={on} onClick={toggle}>
-                                            Today [{present.length}]
+                                            Today [{presentLength}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {present.map((match, key) =>  checkRegex(match) && <Match match={match} key={key}/>)}
+                                        {present.map((match, key) =>  <Match style={{display: checkRegex(match) ? 'block' : 'none'}}  match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }
@@ -113,10 +119,10 @@ export default class MatchesPage extends Component {
                                 {({on, toggle}) => 
                                     <React.Fragment>
                                         <MatchHeader on={on} onClick={toggle}>
-                                            Next Matches [{future.length}]
+                                            Next Matches [{futureLength}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                            {future.map((match, key) => checkRegex(match) && <Match  match={match} key={key}/>)}
+                                            {future.map((match, key) => <Match style={{display: checkRegex(match) ? 'block' : 'none'}} match={match} key={key}/>)}
                                             </Reveal>
                                     </React.Fragment>
                                 }
@@ -125,10 +131,10 @@ export default class MatchesPage extends Component {
                                 {({on, toggle}) => 
                                     <React.Fragment>
                                         <MatchHeader on={on} onClick={toggle}>
-                                            Previous Matches [{past.length}]
+                                            Previous Matches [{pastLength}]
                                         </MatchHeader>
                                         <Reveal style={{display: on ? 'block' : 'none'}}>
-                                        {past.map((match, key) => checkRegex(match) && <Match  match={match} key={key}/>)}
+                                        {past.map((match, key) => <Match style={{display: checkRegex(match) ? 'block' : 'none'}}  match={match} key={key}/>)}
                                         </Reveal>
                                     </React.Fragment>
                                 }
