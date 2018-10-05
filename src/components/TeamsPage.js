@@ -17,7 +17,7 @@ import Match from './MatchAdmin';
 import moment from 'moment';
 import {Helmet} from 'react-helmet'
 
-import {Toggle } from 'react-powerplug';
+import {Toggle} from 'react-powerplug';
 
 const Teams = styled.div`
     width: 50%;
@@ -27,7 +27,6 @@ const Teams = styled.div`
         width: 100%;
     }
 `;
-
 const Team = styled.div`
     background-color: #f6f6f6;
     padding: 12px;
@@ -39,6 +38,13 @@ const Team = styled.div`
         background-color: #eee;
     }
 `;
+const TeamContainer = styled.div`
+  margin-left: 2rem;
+  @media (max-width: 768px){
+      margin-left: 0;
+      width: 100%;
+  }
+`
 
 const Results = styled.div`
     display: flex;
@@ -154,7 +160,7 @@ export default class TeamsPage extends Component {
                      )
                  });
                 }
-             } 
+             }
             </Query>
             </Teams>
             <Teams>
@@ -182,7 +188,7 @@ export default class TeamsPage extends Component {
                         }
                         })
                         return (
-                        <div key={key} style={{marginLeft: '2rem'}}>
+                        <TeamContainer key={key}>
                             <h1>{team.name}</h1>
                             <h2>League</h2>
                             <Table>
@@ -223,7 +229,7 @@ export default class TeamsPage extends Component {
                             </Table>
                             <MatchGroup>
                             <Toggle>
-                                {({on, toggle}) => 
+                                {({on, toggle}) =>
                                     <React.Fragment>
                                         <MatchHeader on={on} onClick={toggle}>
                                             Played [{played.length}]
@@ -235,7 +241,7 @@ export default class TeamsPage extends Component {
                                 }
                             </Toggle>
                             <Toggle>
-                                {({on, toggle}) => 
+                                {({on, toggle}) =>
                                     <React.Fragment>
                                         <MatchHeader on={on} onClick={toggle}>
                                             Next Matches [{notPlayed.length}]
@@ -247,10 +253,10 @@ export default class TeamsPage extends Component {
                                 }
                             </Toggle>
                         </MatchGroup>
-                        </div>
+                      </TeamContainer>
                        )});
                    }
-                } 
+                }
                 </Query>
             </Teams>
             </React.Fragment>
