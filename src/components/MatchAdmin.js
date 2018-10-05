@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import Select from 'react-select/lib/Creatable';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const Match = styled.div`
     display: flex;
     padding: 12px 14px;
+    overflow-x: auto;
     justify-content: space-evenly;
     align-items: stretch;
     flex-direction: column;

@@ -5,6 +5,7 @@ import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
 import { Table } from './Elements';
 import {Helmet} from 'react-helmet'
+import { Link } from 'react-router-dom';
 import { calculateLeague, calculateGoalScorers } from './LeagueCalculations';
 const LeagueQuery = gql`
     query LeagueQuery {
@@ -56,32 +57,37 @@ export default class HomePage extends Component {
                             return (
                                 <React.Fragment>
                                 <h2>League Standings</h2>
+                                    <div style={{overflowX: 'auto'}}>
                                 <Table>
                                     <tbody>
                                     <tr>
                                         <th>Rank</th>
                                         <th>Name</th>
-                                        <th>W</th>
-                                        <th>D</th>
-                                        <th>L</th>
-                                        <th>Goals</th>
+                                        <th>Wins</th>
+                                        <th>Draws</th>
+                                        <th>Losses</th>
+                                        <th>Goals Scored</th>
+                                        <th>Goals Conceded</th>
                                         <th>Goal Difference</th>
                                         <th>Points</th>
                                     </tr>
                                     {league.map((row, key) => <tr key={key}>
                                         <td>{key + 1}</td>
-                                        <td>{row.name}</td>
+                                        <Link style={{textDecoration: 'none'}} to={`/teams/${row.name.toLowerCase()}`}><td>{row.name}</td></Link>
                                         <td>{row.wins}</td>
                                         <td>{row.draws}</td>
                                         <td>{row.losses}</td>
-                                        <td>{row.goals}</td>
+                                        <td>{row.goalsScored}</td>
+                                        <td>{row.goalsConceded}</td>
                                         <td>{row.gd}</td>
                                         <td>{row.points}</td>
                                         </tr>)}
                                         </tbody>
                                 </Table>
+                                    </div>
                                 <h2>Top Goal Scorers</h2>
-                                <Table>
+                                    <div style={{overflowX: 'auto'}}>
+                                    <Table>
                                     <tbody>
                                         <tr>
                                             <th>Rank</th>
@@ -97,6 +103,7 @@ export default class HomePage extends Component {
                                         </tr>)}
                                     </tbody>
                                 </Table>
+                                    </div>
                                 </React.Fragment>
                             )
                         }}

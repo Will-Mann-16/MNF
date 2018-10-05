@@ -4,6 +4,7 @@ import {Query} from 'react-apollo';
 import LoadingIcon from './LoadingIcon';
 import styled from 'styled-components';
 import { Table } from './Elements';
+import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet'
 
 import { calculateLeague } from './LeagueCalculations';
@@ -47,7 +48,7 @@ export default class HomePage extends Component {
                                     </tr>
                                     {league.map((row, key) => <tr key={key}>
                                         <td>{key + 1}</td>
-                                        <td>{row.name}</td>
+                                        <Link style={{textDecoration: 'none'}} to={`/teams/${row.name.toLowerCase()}`}><td>{row.name}</td></Link>
                                         <td>{row.gd}</td>
                                         <td>{row.points}</td>
                                         </tr>)}

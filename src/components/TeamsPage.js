@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 import LoadingIcon from './LoadingIcon';
-import {calculateWinsDrawsLosses, calculateLeagueRanks, calculateGD, calculateGoalsAgainst, calculateGoalsFor, calculatePoints} from './LeagueCalculations';
+import {
+    calculateWinsDrawsLosses,
+    calculateLeagueRanks,
+    calculateGD,
+    calculateGoalsAgainst,
+    calculateGoalsFor,
+    calculatePoints,
+    calculateGoalScorersPerTeam, calculateCleanSheets
+} from './LeagueCalculations';
 import { Table, MatchGroup, MatchHeader, Reveal } from './Elements';
 import Match from './MatchAdmin';
 import moment from 'moment';
@@ -91,6 +99,7 @@ const TEAM_QUERY = gql`
                     id
                     name
                 }
+                scorers
             }
             awayMatches(orderBy: date_ASC){
                 id
@@ -105,14 +114,23 @@ const TEAM_QUERY = gql`
                     id
                     name
                 }
+                scorers
             }
         }
     }
 `;
 export default class TeamsPage extends Component {
     state = {
-        activeTeam: '',
-        activeRank: 0
+        activeTeam: ''
+    }
+    constructor(props){
+        super(props);
+        if(props.match){
+            this.state = {
+                ...this.state,
+                activeTeam: props.match.params.teamName
+            }
+        }
     }
     render() {
         const checkRegex = (match) => {
@@ -128,11 +146,13 @@ export default class TeamsPage extends Component {
             <Teams>
             <Query query={TEAMS_QUERY}>
              {({data, loading}) => {
-                 return loading ? <LoadingIcon /> : calculateLeagueRanks(data.teams).map((team, key) => (
-                     <Team key={key} style={{backgroundColor: this.state.activeTeam === team.name ? '#a6d6c9' : ''}} onClick={() => this.setState({...this.state, activeTeam: team.name, activeRank: key + 1})}>
-                        {team.name}
-                    </Team>
-                    ));
+                 return loading ? <LoadingIcon /> : calculateLeagueRanks(data.teams).map((team, key) => {
+                     return (
+                         <Team key={key} style={{backgroundColor: this.state.activeTeam === team.name.toLowerCase() ? '#a6d6c9' : ''}} onClick={() => this.setState({...this.state, activeTeam: team.name})}>
+                             {team.rank} - {team.name}
+                         </Team>
+                     )
+                 });
                 }
              } 
             </Query>
@@ -145,6 +165,7 @@ export default class TeamsPage extends Component {
                     return  data.teams.map((team, key) => {
                         var {wins, draws, losses} = calculateWinsDrawsLosses(team);
                         var matches = [...team.homeMatches, ...team.awayMatches];
+                        var scorers = calculateGoalScorersPerTeam(matches, team);
                         matches.sort((a, b) => {
                             return new Date(a.date) - new Date(b.date);
                         });
@@ -152,7 +173,7 @@ export default class TeamsPage extends Component {
                         var notPlayed = [];
                         matches.map((match) => {
                             if(checkRegex(match)){
-                                if(match.homeScore + match.awayScore == -2){
+                                if(match.homeScore + match.awayScore === -2){
                                 notPlayed.push(match);
                             }
                             else{
@@ -161,12 +182,12 @@ export default class TeamsPage extends Component {
                         }
                         })
                         return (
-                        <div style={{marginLeft: '2rem'}}>
+                        <div key={key} style={{marginLeft: '2rem'}}>
                             <h1>{team.name}</h1>
+                            <h2>League</h2>
                             <Table>
                             <tbody>
                             <tr>
-                            <th>Rank</th>
                             <th>Name</th>
                             <th>W</th>
                             <th>D</th>
@@ -175,7 +196,6 @@ export default class TeamsPage extends Component {
                             <th>Points</th>
                         </tr>
                             <tr>
-                            <td>{this.state.activeRank}</td>
                             <td>{team.name}</td>
                             <td>{wins}</td>
                             <td>{draws}</td>
@@ -184,6 +204,22 @@ export default class TeamsPage extends Component {
                             <td>{calculatePoints(team)}</td>
                             </tr>
                             </tbody>
+                            </Table>
+                            <p>Goals For: {calculateGoalsFor(team)}</p>
+                            <p>Goals Against: {calculateGoalsAgainst(team)}</p>
+                            <p>Clean Sheets: {calculateCleanSheets(team)}</p>
+                            <h2>Goal Scorers</h2>
+                            <Table>
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    {scorers.map(({name, total}, key) => <tr key={key}>
+                                        <td>{name}</td>
+                                        <td>{total}</td>
+                                    </tr>)}
+                                </tbody>
                             </Table>
                             <MatchGroup>
                             <Toggle>

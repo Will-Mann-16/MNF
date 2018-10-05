@@ -64,11 +64,12 @@ export const calculateLeague = (teams) => {
         var {wins, draws, losses} = calculateWinsDrawsLosses(team);
         var gd = calculateGD(team);
         var points = calculatePoints(team);
-        var goals = calculateGoalsFor(team);
-        league.push({name: team.name, wins, draws, losses, gd, points, goals});
+        var goalsScored = calculateGoalsFor(team);
+        var goalsConceded = calculateGoalsAgainst(team);
+        league.push({name: team.name, wins, draws, losses, gd, points, goalsScored, goalsConceded});
     });
     return league.sort((a,b) => {
-        return a.points === b.points ? b.gd === a.gd ? b.goals - a.goals : b.gd - a.gd : b.points - a.points;
+        return a.points === b.points ? b.gd === a.gd ? b.goalsScored - a.goalsScored : b.gd - a.gd : b.points - a.points;
     })
 }
 export const calculateGD = (team) => {
@@ -86,7 +87,7 @@ export const calculateLeagueRanks = (teams) => {
     });
     return league.sort((a,b) => {
         return a.points === b.points ? b.gd - a.gd : b.points - a.points;
-    });
+    }).map((item, key) => {return {...item, rank: key + 1}});
 }
 export const calculateGoalScorers = (matches) => {
     var scorers = [];
@@ -120,4 +121,23 @@ export const calculateGoalScorers = (matches) => {
         }
     });
     return scorers.sort((a, b) => b.total - a.total);
+}
+
+export const calculateGoalScorersPerTeam = (matches, team) => {
+    return calculateGoalScorers(matches).filter((a) => a.house === team.name);
+}
+
+export const calculateCleanSheets = (team) => {
+    var cleanSheets = 0;
+    team.homeMatches.map((match) => {
+        if(match.awayScore === 0){
+            cleanSheets += 1;
+        }
+    });
+    team.awayMatches.map((match) => {
+        if(match.homeScore === 0){
+            cleanSheets += 1;
+        }
+    });
+    return cleanSheets;
 }

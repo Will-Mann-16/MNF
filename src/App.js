@@ -34,7 +34,8 @@ class App extends Component {
             <Route path="/" exact><HomePage /></Route>
             <Route path="/admin"><AdminPage /></Route>
             <Route path="/matches"><MatchesPage /></Route>
-            <Route path="/teams"><TeamsPage /></Route>
+            <Route exact path="/teams"><TeamsPage /></Route>
+              <Route path="/teams/:teamName" component={TeamsPage} />
             <Route path="/statistics"><StatisticsPage /></Route>
             <Route path="/rules"><RulesPage /></Route>
             <Route><NotFoundPage /></Route>
