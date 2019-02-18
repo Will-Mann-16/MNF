@@ -18,7 +18,7 @@ const client = new ApolloClient({
 const NotFoundPage = ({location}) => (
   <React.Fragment>
     <h1>404 - Page Not Found</h1>
-    <p>Unfortunatly, the page {location.pathname} does not exist on our servers. Please return to the home page to view this website.</p>
+    <p>Unfortunately, the page {location.pathname} does not exist on our servers. Please return to the home page to view this website.</p>
   </React.Fragment>
 )
 class App extends Component {
